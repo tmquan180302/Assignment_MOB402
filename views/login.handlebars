@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+
+
+<body>
+    <div class="jumbotron text-center">
+        <h1>LOG IN</h1>
+        <button type="submit" onclick="myLog()">HI</button>
+        <h1>{{email}}</h1>
+    </div>
+
+    <div class="container">
+
+        <form action="/controller">
+            <div class="form-group">
+                <label for="email">Email address:</label>
+                <input type="email" class="form-control" id="email" value="{{email}}" >
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="pwd">
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox"> Remember me</label>
+            </div>
+            <button type="submit" class="btn btn-default" onclick="myFunction()">Login</button>
+
+
+        </form>
+        <form action="/signup" enctype="multipart/form-data" method="GET">
+            <button>SignUp</button>
+        </form>
+        <div>
+
+        </div>
+    </div>
+    <script>
+        function myFunction() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("pwd").value;
+            if (email.isEmpty()) {
+                alert("Please enter");
+            }
+            console.log(email, password);
+        }
+        function myLog() {
+            alert("hi");
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="../user.js"></script>
+
+
+</head>
+<script>
+    function myFunction() {
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("pwd").value;
+        var image = document.getElementById("image").value;
+        try {
+            if (email.isEmpty()) {
+                console.log("Please enter")
+            }
+        }caches{
+            alert("Please enter");
+        }
+    }
+</script>
+
+<body>
+    <div class="jumbotron text-center">
+        <h1>SIGN UP</h1>
+    </div>
+
+    <div class="container">
+
+        <!--  SINGLE FILE -->
+        {{!-- <form action="/uploadfile" enctype="multipart/form-data" method="POST" onsubmit=" return myFunction()">
+            <label for="">Avatar</label>
+            <input type="file" name="myFile" id="image" />
+        </form> --}}
+        <form action="" method="POST">
+            <div class="form-group">
+                <label for="email">Email address:</label>
+                <input type="email" name="email" class="form-control" id="email" >
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" name="password" class="form-control" id="pwd" >
+
+            </div>
+
+
+            <button type="submit" class="btn btn-default" >SIGN UP</button>
+
+
+        </form>
+
+        <div>
+
+        </div>
+    </div>
+</body>
+
+</html>
