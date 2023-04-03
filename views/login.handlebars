@@ -9,55 +9,34 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 </head>
-
-
 <body>
     <div class="jumbotron text-center">
-        <h1>LOG IN</h1>
-        <button type="submit" onclick="myLog()">HI</button>
-        <h1>{{email}}</h1>
+        <h1>Thêm Sinh Viên </h1>
     </div>
-
     <div class="container">
 
-        <form action="/controller">
+        <form action="/{{sinhvien._id}}" method="POST">
             <div class="form-group">
-                <label for="email">Email address:</label>
-                <input type="email" class="form-control" id="email" value="{{email}}" >
+                <label for="ten">Ten:</label>
+                <input type="text" id="ten" name="ten" class="form-control" value="{{sinhvien.ten}}" >
             </div>
             <div class="form-group">
-                <label for="pwd">Password:</label>
-                <input type="password" class="form-control" id="pwd">
+                <label for="tuoi">Tuoi:</label>
+                <input type="number" id="tuoi" name="tuoi" class="form-control" value="{{sinhvien.tuoi}}" >
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox"> Remember me</label>
+            <div class="form-group">
+                <label for="adresss">Dia chi:</label>
+                <input type="text" id="adresss" name="adresss" class="form-control" value="{{sinhvien.adresss}}" >
             </div>
-            <button type="submit" class="btn btn-default" onclick="myFunction()">Login</button>
-
+            <button type="submit" class="btn btn-default">Sửa</button>
 
         </form>
-        <form action="/signup" enctype="multipart/form-data" method="GET">
-            <button>SignUp</button>
-        </form>
+
         <div>
 
         </div>
     </div>
-    <script>
-        function myFunction() {
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("pwd").value;
-            if (email.isEmpty()) {
-                alert("Please enter");
-            }
-            console.log(email, password);
-        }
-        function myLog() {
-            alert("hi");
-        }
-    </script>
 </body>
 
 </html>

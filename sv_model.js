@@ -4,9 +4,14 @@ const SinhVienSchema =   new mongoose.Schema({
     ten: {
         type: String,
     },
-    diachi: {
+    tuoi: {
+        type: String,
+    },
+    adresss:{
         type: String,
     }
 });
+
 const SinhVienModel = mongoose.model('sinhvien', SinhVienSchema);
+
 module.exports = SinhVienModel;

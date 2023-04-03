@@ -1,58 +1,76 @@
-var express = require('express');
+const express = require('express');
 
-var expressHbs = require('express-handlebars');
+const expressHbs = require('express-handlebars');
 
-var user = require('./user.js');
+const mongoose = require('mongoose');
 
-
-var mongoose = require('mongoose');
+const methodOverride = require('method-override');
 
 const uri = 'mongodb+srv://quantmph19466:ZehXhobhPJMbgUY7@cluster0.qiz9d1q.mongodb.net/user?retryWrites=true&w=majority'
 
-const models = require('./sv_model')
-var app = express();
+const Models = require('./sv_model')
 
-
-app.get("/sinhvien", async (request, response) => {
-   
-    // Bước đầu kết nối db 
-    await mongoose.connect(uri).then(console.log('Ket noi DB thanh cong.'));
-
-    // Thêm await vì kết nối  bất đồng bộ ==> cái này quan trọng (Chưa xử lý xong đã chuyển sang câuu lệnh tiếp)
-    // Hướng xử lý là đặt vào hàm await hoặc try catch
-    let sinhviens = await models.find();
-
-    try {
-        console.log(sinhviens);
-        response.send(sinhviens);
-    } catch (error) {
-        response.status(500).send(error);
-    }
-        
-   
-});
-app.post("/add_sv", async (request, response) => {
-
-    await mongoose.connect(uri).then(console.log('Ket noi DB thanh cong.'));
-
-    let sv = new svModel({
-        ten: 'Tran Van Anh',
-        tuoi: 22
-    });
-
-    sv.diachi = 'HP';
-
-    try {
-        console.log(sv);
-        await sv.save();
-        response.send(sv);
-    } catch (error) {
-        response.status(500).send(error);
-    }
-});
-
+const app = express();
 
 app.listen(3000);
+
+app.use(express.json());
+
+// thành phần trung gian xử lý form thành dạng object 
+app.use(express.urlencoded());
+
+app.use(methodOverride('_method'));
+
+mongoose.connect(uri).then(console.log('Ket noi DB thanh cong.'));
+
+// Lay danh sach Get
+app.get('/', (req, res) => {
+    Models.find({})
+        .then(sinhvien => {
+            sinhvien = sinhvien.map(sinhvien => sinhvien.toObject())
+            res.render('controller', {
+                sinhvien: sinhvien
+            })
+        })
+});
+
+// render den man hinh Them
+app.get('/mhthem', (req, res) => {
+    res.render('signup', {
+    });
+});
+
+// Them
+app.post('/saveSv', (req, res) => {
+    const model = new Models(req.body);
+    model.save()
+        .then(res.redirect('/'))
+})
+
+// render ra sua form
+app.get('/:id/edit', (req, res) => {
+
+    Models.findById(req.params.id)
+        .then(sinhvien => {
+            sinhvien = sinhvien.toObject()
+            res.render('login', {
+                sinhvien: sinhvien
+            })
+        });
+})
+
+// chuc namg sua 
+app.post('/:id', async (req, res) => {
+    Models.findByIdAndUpdate(req.params.id, req.body).
+    then(res.redirect('/'));
+})
+
+app.get('/:id/delete', (req, res) => {
+    Models.findOneAndRemove({_id: req.params.id})
+    .then(res.redirect('/'))
+
+});
+
 
 
 app.engine('.handlebars', expressHbs.engine({
@@ -62,31 +80,3 @@ app.engine('.handlebars', expressHbs.engine({
 }));
 
 app.set('view engine', '.handlebars');
-
-app.get('/', function (req, res) {
-
-    res.render('login', {
-        layouts: 'main',
-
-    });
-});
-
-app.post('/signup', function (req, res) {
-    res.render('signup', {
-        layouts: 'main',
-    });
-});
-
-app.get('/signup', function (req, res) {
-    res.render('signup', {
-        layouts: 'main',
-
-    });
-});
-
-app.get('/controller', function (req, res) {
-    res.render('controller', {
-        layouts: 'main',
-    });
-
-});
